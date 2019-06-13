@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl} from '@angular/forms'
 
 @Component({
   selector: 'app-pool-gallon',
@@ -7,27 +8,40 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PoolGallonComponent implements OnInit {
   // Component variables
-  poolGallons: number = 0;
-  poolShapes: any = [
+  gallons: number = 0;
+  shapes: any = [
     { text: "Rectangular", value: "rect" }, { text: "Triangular", value: "tri" }, { text: "Circular", value: "circ" }];
-  poolShape: any = ""
-  poolLength: string = "";
-  poolWidth: string = "";
-  poolDepth1: string = "";
-  poolDepth2: string = "";
+  shape: any = ""
+  length: string = "";
+  width: string = "";
+  depth1: string = "";
+  //depth2: string = "";
+
+  poolGallonForm = new FormGroup({
+    gallons: new FormControl(''),
+    shape: new FormControl(''),
+    length: new FormControl(''),
+    width: new FormControl(''),
+    depth1: new FormControl(''),
+    depth2: new FormControl('')
+  });
 
 
   constructor() { }
 
   ngOnInit() {
-    this.poolShape = this.poolShapes[0].value;
+    // this.poolShape = this.poolShapes[0].value;
+    this.poolGallonForm.patchValue({
+      shape: this.shapes[0].value
+    });
   }
 
   calculatePoolGallons() {
-    let poolDepthAverage = (Number(this.poolDepth1) + Number(this.poolDepth2)) / 2;
-    switch(this.poolShape) {
+    let avgDepth = (Number(this.poolGallonForm.get('depth1').value + Number(this.poolGallonForm.controls['depth2'].value))/2
+    // let poolDepthAverage = (Number(this.poolDepth1) + Number(this.poolDepth2)) / 2;
+    switch(this.poolGallonForm.controls['shape'].value) {
       case "rect": {
-        this.poolGallons = Number(this.poolLength) * Number(this.poolWidth) * poolDepthAverage * 7.5;
+        //this.poolGallons = Number(this.poolLength) * Number(this.poolWidth) * poolDepthAverage * 7.5;
         break;
       }
       case "tri": {
@@ -35,7 +49,7 @@ export class PoolGallonComponent implements OnInit {
         break;
       }
       case "circ": {
-        this.poolGallons = 3.14 * Number(this.poolWidth) * Number(this.poolWidth) * poolDepthAverage * 7.5;
+        //this.poolGallons = 3.14 * Number(this.poolWidth) * Number(this.poolWidth) * poolDepthAverage * 7.5;
         break;
       }
     }

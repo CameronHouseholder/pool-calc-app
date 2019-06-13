@@ -1,28 +1,32 @@
-<div>
-  <label for="sddPoolShape">Shape</label>
-  <select id="sddPoolShape" [(ngModel)]="poolShape">
-    <option *ngFor="let poolShape of poolShapes" [value]="poolShape.value">{{poolShape.text}}</option>
-  </select>
-  <br>
-  <label for="txtLength">Length (ft)</label>
-  <input type="text" id="txtLength" [(ngModel)]="poolLength">
-  <br>
-  <label for="txtWidth">Width (ft)</label>
-  <input type="text" id="txtWidth" [(ngModel)]="poolWidth">
-  <br>
-  <label for="txtDepth1">Depth 1 (ft)</label>
-  <input type="text" id="txtDepth1" [(ngModel)]="poolDepth1">
-  <br>
-  <label for="txtDepth2">Depth 2 (ft)</label>
-  <input type="text" id="txtDepth2" [(ngModel)]="poolDepth2">
-  <br>
-  <input type="button" id="btnCalculatePoolGallons" value="Calculate" (click)="calculatePoolGallons()">
-</div>
+<form [formGroup]="poolGallonForm">
+  <label>
+    Shape
+    <select id="sddPoolShape" formControlName="shape">
+      <option *ngFor="let shape of shapes" [value]="shape.value">{{shape.text}}</option>
+    </select>
+  </label>
+  <label>
+    Length (ft)
+    <input type="text" id="txtLength" formControlName="length">
+  </label>
+  <label>
+    Width (ft)
+    <input type="text" id="txtWidth" formControlName="width">
+  </label>
+  <label>
+    Depth 1 (ft)
+    <input type="text" id="txtDepth1" formControlName="depth1">
+  </label>
+  <label>
+    Depth 2 (ft)
+    <input type="text" id="txtDepth2" fromControlName="depth2">
+  </label>
+  <input type="button" id="btnCalculatePoolGallons" value="Calculate" (click)="calculate()">
+</form>
 <div>
   <label for="txtPoolGallons">Pool Gallons</label>
-  <input type='text' id="txtPoolGallons" [(ngModel)]="poolGallons">
+  <input type='text' id="txtPoolGallons" [(ngModel)]="gallons">
 </div>
 <div>
   {{ poolGallons }} gallons
 </div>
-
